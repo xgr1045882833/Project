@@ -2,38 +2,18 @@ package com.aaronxie.messaging.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import com.aaronxie.messaging.R;
 import com.aaronxie.messaging.fragment.ConversationListFragment;
 
 public class ConversationList extends AppCompatActivity {
-
-    private Toolbar.OnMenuItemClickListener onMenuItemClickListener =
-            new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    String msg = "";
-                    switch (item.getItemId()) {
-                        case R.id.action_edit:
-                            msg += "Click edit";
-                            break;
-                        case R.id.action_share:
-                            msg += "Click share";
-                            break;
-                        case R.id.action_settings:
-                            msg += "Click setting";
-                            break;
-                    }
-                    if (!msg.equals("")) {
-                        Toast.makeText(ConversationList.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                    return true;
-                }
-            };
+    private static final String TAG = ConversationList.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +24,8 @@ public class ConversationList extends AppCompatActivity {
                 .add(R.id.fragment_container, new ConversationListFragment())
                 .commit();
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_launcher_round);
-        toolbar.setNavigationContentDescription("编辑");
-        toolbar.setLogo(R.mipmap.ic_launcher);
-        toolbar.setTitle("谢国荣");
-        toolbar.setSubtitle("18819215282");
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        //toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
     }
 
     @Override
@@ -66,17 +41,26 @@ public class ConversationList extends AppCompatActivity {
         switch (itemId) {
             case R.id.action_edit:
                 msg += "Click edit";
+                Log.i(TAG, "==========msg:" + msg);
                 break;
-            case R.id.action_share:
-                msg += "Click share";
+            case R.id.action_more:
+                msg += "Click more";
+                Log.i(TAG, "==========msg:" + msg);
+                View view = findViewById(R.id.action_more);
+                showPopuMenu(view);
                 break;
-            case R.id.action_settings:
-                msg += "Click setting";
+            default:
+                msg += "Click nothing";
+                Log.i(TAG, "==========msg:" + msg);
                 break;
-        }
-        if (!msg.equals("")) {
-            Toast.makeText(ConversationList.this, msg, Toast.LENGTH_SHORT).show();
+
         }
         return true;
+    }
+
+    private void showPopuMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(ConversationList.this, view);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_more, popupMenu.getMenu());
+        popupMenu.show();
     }
 }

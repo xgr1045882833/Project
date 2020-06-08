@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppTheme.base" />
+
     <style name="AppTheme.base" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -9,6 +10,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="actionMenuTextColor">@color/actionMenuTextColor</item>
+        <item name="android:textColorSecondary">@color/actionMenuTextColor</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
