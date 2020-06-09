@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,13 +76,7 @@ public class SettingsFragment extends Fragment {
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Log.i(TAG, "=============isChecked:" + isChecked);
-                    aSwitch.setSwitchTextAppearance(getActivity(), R.style.s_true);
-                } else {
-                    Log.i(TAG, "=============isChecked:" + isChecked);
-                    aSwitch.setSwitchTextAppearance(getActivity(), R.style.s_false);
-                }
+
             }
         });
         return view;
