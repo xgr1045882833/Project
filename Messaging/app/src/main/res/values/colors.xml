@@ -5,5 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="actionMenuTextColor">#FFFFFF</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorGray">#DCDCDC</color>
+    <color name="colorGray_1">#DCDCDC</color>
+    <color name="colorGray_2">#9e9e9e</color>
+    <color name="colorGreen_1">#33da33</color>
 </resources>

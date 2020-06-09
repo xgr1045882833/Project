@@ -6,15 +6,28 @@
     tools:context=".fragment.SettingsFragment">
 
     <Switch
-        android:id="@+id/switch_show_fragment"
-        android:layout_width="wrap_content"
+        android:id="@+id/switch_show_fragment_test"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
+        android:background="@color/colorGray_1"
+        android:checked="true"
         android:paddingStart="24dp"
         android:paddingTop="16dp"
         android:paddingEnd="24dp"
         android:paddingBottom="16dp"
-        android:text="" />
+        android:text="@string/fragment_switch"
+        android:visibility="gone" />
+
+    <Switch
+        android:id="@+id/switch_show_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:checked="true"
+        android:gravity="center"
+        android:switchMinWidth="20dp"
+        android:thumb="@drawable/thumb"
+        android:track="@drawable/track" />
 
 </FrameLayout>

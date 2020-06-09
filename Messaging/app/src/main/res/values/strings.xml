@@ -9,5 +9,7 @@
     <string name="action_collection">我的收藏</string>
     <string name="action_block">骚扰拦截</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="fragment_switch">fragment是否分页 :</string>
+    <string name="fragment_switch">fragment是否分页</string>
+    <string name="switch_on">on</string>
+    <string name="switch_off">off</string>
 </resources>

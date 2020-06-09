@@ -15,4 +15,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="s_true" parent="@style/TextAppearance.AppCompat.Widget.Switch">
+        <item name="android:textColor">@color/colorGreen_1</item>
+    </style>
+
+    <style name="s_false" parent="@style/TextAppearance.AppCompat.Widget.Switch">
+        <item name="android:textColor">@color/colorGray_2</item>
+    </style>
+
 </resources>

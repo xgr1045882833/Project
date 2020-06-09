@@ -4,11 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.aaronxie.messaging.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +23,7 @@ import com.aaronxie.messaging.R;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
+    private static final String TAG = SettingsFragment.class.getSimpleName();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,6 +71,21 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        final Switch aSwitch = view.findViewById(R.id.switch_show_fragment);
+        aSwitch.setChecked(true);
+        aSwitch.setSwitchTextAppearance(getActivity(), R.style.s_true);
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.i(TAG, "=============isChecked:" + isChecked);
+                    aSwitch.setSwitchTextAppearance(getActivity(), R.style.s_true);
+                } else {
+                    Log.i(TAG, "=============isChecked:" + isChecked);
+                    aSwitch.setSwitchTextAppearance(getActivity(), R.style.s_false);
+                }
+            }
+        });
         return view;
     }
 
