@@ -5,14 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".fragment.SettingsFragment">
 
-    <Button
-        android:id="@+id/btn_switch_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
+    <Switch
+        android:id="@+id/switch_show_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:background="@drawable/bg_button_selector"
-        android:text="@string/fragment_switch"
-        android:textAllCaps="false" />
+        android:gravity="center"
+        android:paddingStart="24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="16dp"
+        android:text="" />
+
 </FrameLayout>
