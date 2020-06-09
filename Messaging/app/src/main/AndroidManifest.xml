@@ -11,8 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".activity.ConversationList">
+        <activity android:name=".activity.ConversationList">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ConversationActivity" />
-
+        <activity android:name=".activity.SettingsActivity"></activity>
     </application>
 
 </manifest>

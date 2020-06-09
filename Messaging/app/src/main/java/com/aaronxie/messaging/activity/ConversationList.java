@@ -1,5 +1,6 @@
 package com.aaronxie.messaging.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -61,6 +62,21 @@ public class ConversationList extends AppCompatActivity {
     private void showPopuMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(ConversationList.this, view);
         popupMenu.getMenuInflater().inflate(R.menu.menu_more, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                switch (itemId) {
+                    case R.id.action_settings:
+                        Log.i(TAG, "==========msg:settings");
+                        Intent intent = new Intent(
+                                ConversationList.this, SettingsActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                return true;
+            }
+        });
         popupMenu.show();
     }
 }
