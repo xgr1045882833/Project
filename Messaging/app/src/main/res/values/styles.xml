@@ -23,4 +23,8 @@
         <item name="android:textColor">@color/colorGray_2</item>
     </style>
 
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/DP_20</item>
+    </style>
+
 </resources>

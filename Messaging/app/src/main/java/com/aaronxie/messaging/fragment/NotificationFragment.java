@@ -10,27 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aaronxie.messaging.R;
-import com.aaronxie.messaging.viewmodel.ConversationListViewModel;
+import com.aaronxie.messaging.viewmodel.NotificationViewModel;
 
-public class ConversationListFragment extends Fragment {
+public class NotificationFragment extends Fragment {
 
-    private ConversationListViewModel mViewModel;
+    private NotificationViewModel mViewModel;
 
-    public static ConversationListFragment newInstance() {
-        return new ConversationListFragment();
+    public static NotificationFragment newInstance() {
+        return new NotificationFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_conversation_list, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_conversation_list, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ConversationListViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(NotificationViewModel.class);
         // TODO: Use the ViewModel
     }
 
