@@ -12,4 +12,9 @@
     <string name="fragment_switch">fragment是否分页</string>
     <string name="switch_on">on</string>
     <string name="switch_off">off</string>
+
+    <string-array name="tab_array">
+        <item>信息</item>
+        <item>通知</item>
+    </string-array>
 </resources>
