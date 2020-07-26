@@ -35,6 +35,6 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles.get(position);
+        return null;
     }
 }

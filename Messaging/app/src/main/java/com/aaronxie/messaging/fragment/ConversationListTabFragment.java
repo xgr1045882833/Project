@@ -3,27 +3,32 @@ package com.aaronxie.messaging.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 
-import com.aaronxie.messaging.ListenerImpl.SwitchOnCheckedChangeListenerImpl;
 import com.aaronxie.messaging.R;
-import com.aaronxie.messaging.utils.SPUtil;
+import com.aaronxie.messaging.adapter.MyFragmentPagerAdapter;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SettingsFragment.OnFragmentInteractionListener} interface
+ * {@link ConversationListTabFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SettingsFragment#newInstance} factory method to
+ * Use the {@link ConversationListTabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment {
-    private static final String TAG = SettingsFragment.class.getSimpleName();
+public class ConversationListTabFragment extends Fragment {
+    private List<String> mTitles;
+    private List<Fragment> mFragments;
+    private boolean mIsTabMode = true;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,7 +40,7 @@ public class SettingsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public SettingsFragment() {
+    public ConversationListTabFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +50,11 @@ public class SettingsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
+     * @return A new instance of fragment ConversationListTabFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
+    public static ConversationListTabFragment newInstance(String param1, String param2) {
+        ConversationListTabFragment fragment = new ConversationListTabFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,12 +75,9 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        Switch aSwitch = view.findViewById(R.id.switch_show_fragment);
-        boolean isTabMode = (boolean) SPUtil.get(getActivity(), SPUtil.IS_TAB_MODE, true);
-        aSwitch.setChecked(isTabMode);
-        aSwitch.setSwitchTextAppearance(getActivity(), R.style.s_true);
-        aSwitch.setOnCheckedChangeListener(new SwitchOnCheckedChangeListenerImpl());
+        View view = inflater.inflate(R.layout.fragment_conversation_list_tab, container, false);
+        initData();
+        initView(view);
         return view;
     }
 
@@ -101,6 +103,27 @@ public class SettingsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    private void initData() {
+        mTitles = new ArrayList<>();
+        String[] titles = this.getResources().getStringArray(R.array.tab_array);
+        Collections.addAll(mTitles, titles);
+
+        mFragments = new ArrayList<>();
+        mFragments.add(new MessageFragment());
+        mFragments.add(new NotificationFragment());
+    }
+
+    private void initView(View view) {
+        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+        ViewPager viewPager = view.findViewById(R.id.view_pager);
+
+        viewPager.setOffscreenPageLimit(mFragments.size());
+        viewPager.setAdapter(
+                new MyFragmentPagerAdapter(getActivity().getSupportFragmentManager(), mFragments, mTitles));
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_add);
     }
 
     /**
