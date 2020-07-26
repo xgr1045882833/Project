@@ -1,10 +1,9 @@
 package com.aaronxie.messaging.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -13,18 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.aaronxie.messaging.R;
-import com.aaronxie.messaging.adapter.MyFragmentPagerAdapter;
-import com.aaronxie.messaging.fragment.MessageFragment;
-import com.aaronxie.messaging.fragment.NotificationFragment;
+import com.aaronxie.messaging.fragment.ConversationListFragment;
+import com.aaronxie.messaging.fragment.ConversationListTabFragment;
+import com.aaronxie.messaging.utils.SPUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class ConversationList extends AppCompatActivity {
+public class ConversationList extends AppCompatActivity implements ConversationListTabFragment.OnFragmentInteractionListener {
     private static final String TAG = ConversationList.class.getSimpleName();
-    private List<String> mTitles;
-    private List<Fragment> mFragments;
+    private boolean mIsTabMode = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,33 +28,31 @@ public class ConversationList extends AppCompatActivity {
         toolbar.setTitle("");
         toolbar.inflateMenu(R.menu.menu_main);
         toolbar.setOnMenuItemClickListener(new OnMenuItemClickListenerImpl());
+        mIsTabMode = (boolean) SPUtil.get(this, SPUtil.IS_TAB_MODE, true);
+        Log.i(TAG, "=========onCreate isChecked:" + SPUtil.get(
+                this, SPUtil.IS_TAB_MODE, true));
+        if (mIsTabMode) {
+            startFragment(new ConversationListTabFragment());
+        } else {
+            startFragment(new ConversationListFragment());
+        }
+    }
+
+    private void startFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.conversation_list_fragment_container, fragment, "tag")
+                .commitAllowingStateLoss();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
-        initView();
     }
 
-    private void initData() {
-        mTitles = new ArrayList<>();
-        String[] titles = this.getResources().getStringArray(R.array.tab_array);
-        Collections.addAll(mTitles, titles);
-
-        mFragments = new ArrayList<>();
-        mFragments.add(new MessageFragment());
-        mFragments.add(new NotificationFragment());
-    }
-
-    private void initView() {
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        ViewPager viewPager = findViewById(R.id.view_pager);
-
-        viewPager.setOffscreenPageLimit(mFragments.size());
-        viewPager.setAdapter(
-                new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments, mTitles));
-        tabLayout.setupWithViewPager(viewPager);
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void showPopuMenu(View view) {
@@ -75,7 +67,8 @@ public class ConversationList extends AppCompatActivity {
                         Log.i(TAG, "==========msg:settings");
                         Intent intent = new Intent(
                                 ConversationList.this, SettingsActivity.class);
-                        startActivity(intent);
+                        //startActivity(intent);
+                        startActivityForResult(intent, 1);
                         break;
                 }
                 return true;
@@ -83,6 +76,24 @@ public class ConversationList extends AppCompatActivity {
         });
         popupMenu.show();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mIsTabMode = (boolean) SPUtil.get(this, SPUtil.IS_TAB_MODE, true);
+        Log.i(TAG, "=========onActivityResult isChecked:" + SPUtil.get(
+                this, SPUtil.IS_TAB_MODE, true));
+        if (mIsTabMode) {
+            startFragment(new ConversationListTabFragment());
+        } else {
+            startFragment(new ConversationListFragment());
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
 
     private class OnMenuItemClickListenerImpl implements Toolbar.OnMenuItemClickListener {
         @Override
