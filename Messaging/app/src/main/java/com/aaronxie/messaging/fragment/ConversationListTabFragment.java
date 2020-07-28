@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ConversationListTabFragment extends Fragment {
+    private static final String TAG = ConversationListTabFragment.class.getSimpleName();
     private List<String> mTitles;
     private List<Fragment> mFragments;
     private boolean mIsTabMode = true;
@@ -103,6 +105,10 @@ public class ConversationListTabFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        mFragments.clear();
+        mFragments = null;
+        mTitles.clear();
+        mTitles = null;
     }
 
     private void initData() {
@@ -121,7 +127,7 @@ public class ConversationListTabFragment extends Fragment {
 
         viewPager.setOffscreenPageLimit(mFragments.size());
         viewPager.setAdapter(
-                new MyFragmentPagerAdapter(getActivity().getSupportFragmentManager(), mFragments, mTitles));
+                new MyFragmentPagerAdapter(getChildFragmentManager(), mFragments, mTitles));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_add);
     }
