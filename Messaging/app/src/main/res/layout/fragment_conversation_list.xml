@@ -16,6 +16,7 @@
         android:paddingStart="8dp" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_conversation_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp" />
