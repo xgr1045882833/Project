@@ -55,6 +55,7 @@ public class ConversationListFragment extends Fragment {
         mRecyclerView.setLayoutManager(manager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
+        mRecyclerView.setNestedScrollingEnabled(false);
         mConversationListAdapter = new ConversationListAdapter();
         mRecyclerView.setAdapter(mConversationListAdapter);
     }
