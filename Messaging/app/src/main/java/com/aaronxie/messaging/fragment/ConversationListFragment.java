@@ -1,5 +1,6 @@
 package com.aaronxie.messaging.fragment;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,19 +10,24 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.aaronxie.messaging.R;
 import com.aaronxie.messaging.adapter.ConversationListAdapter;
+import com.aaronxie.messaging.bean.User;
 import com.aaronxie.messaging.viewmodel.ConversationListViewModel;
 
-public class ConversationListFragment extends Fragment {
+import java.util.List;
 
+public class ConversationListFragment extends Fragment {
+    private static final String TAG = ConversationListFragment.class.getSimpleName();
     private Context mContext;
     private ConversationListViewModel mViewModel;
     private ConversationListAdapter mConversationListAdapter;
+    private List<User> mUsers;
     private RecyclerView mRecyclerView;
 
     public static ConversationListFragment newInstance() {
@@ -51,13 +57,27 @@ public class ConversationListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ConversationListViewModel.class);
         // TODO: Use the ViewModel
+        mViewModel.getUserLiveData().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(@Nullable List<User> users) {
+                mUsers = users;
+                Log.i(TAG, "==========users.size():" + users.size());
+                setAdapter();
+            }
+        });
+        mViewModel.setUserLiveData();
         LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setNestedScrollingEnabled(false);
-        mConversationListAdapter = new ConversationListAdapter();
-        mRecyclerView.setAdapter(mConversationListAdapter);
+    }
+
+    private void setAdapter() {
+        mConversationListAdapter = new ConversationListAdapter(mUsers);
+        if (mRecyclerView != null) {
+            mRecyclerView.setAdapter(mConversationListAdapter);
+        }
     }
 
 }
